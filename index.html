@@ -77,31 +77,33 @@
     <main class="w-full max-w-md h-screen md:h-[844px] md:my-8 md:rounded-[40px] md:shadow-[0_24px_50px_rgba(0,0,0,0.5)] md:border-8 md:border-slate-800 bg-white flex flex-col justify-between overflow-hidden relative">
         
         <!-- PANTALLA 1: PORTADA OFICIAL (ESTILO AFICHE TVN) -->
-        <section id="screen-portada" class="screen flex-grow flex flex-col justify-between p-6 pt-12 pb-8 bg-tvn-blue text-white relative z-10">
-            <!-- Cabecera Institucional -->
-            <div class="text-center pt-2">
-                <span class="text-[10px] font-poppins font-extrabold tracking-widest text-tvn-teal bg-white/10 px-3 py-1.5 rounded-full uppercase">
-                    Recursos Humanos | TVN Media
-                </span>
-            </div>
+        <section id="screen-welcome" class="screen flex-grow flex flex-col justify-between items-center p-6 pt-8 pb-6 text-center bg-tvn-dark text-white min-h-screen">
+            
+            <!-- Bloque Superior: Logo + Ilustración + Títulos -->
+            <div class="w-full flex flex-col items-center space-y-4">
+                <p class="text-xs font-bold tracking-wider text-tvn-teal opacity-80 uppercase">Recursos Humanos | TVN Media</p>
+                
+                <!-- ¡Aquí está tu dibujo de vuelta y bien ubicado! -->
+                <div class="flex justify-center opacity-[0.15] text-tvn-teal my-2 animate-pulse">
+                    <i class="fa-solid fa-spa text-[80px]"></i>
+                </div>
 
-            <!-- Título Principal Oficial -->
-            <div class="my-auto space-y-5 text-center">
-                <h2 class="text-4xl font-poppins font-extrabold leading-tight tracking-tight text-white uppercase">
-                    CUIDARNOS<br>
-                    <span class="text-tvn-teal">TAMBIÉN</span><br>
-                    ES PARTE<br>
+                <h1 class="text-2xl md:text-4xl font-extrabold leading-tight tracking-tight px-2">
+                    CUIDARNOS TAMBIÉN <br>
+                    <span class="text-tvn-teal">ES PARTE</span> <br>
                     DEL TRABAJO
-                </h2>
-                <div class="w-16 h-1 bg-tvn-coral mx-auto rounded-full"></div>
-                <p class="text-sm text-slate-100 font-lato leading-relaxed px-4">
+                </h1>
+                
+                <div class="w-12 h-1 bg-orange-500 rounded-full my-2"></div>
+                
+                <p class="max-w-xs text-xs md:text-sm text-gray-300 leading-relaxed px-4">
                     Una pausa interactiva de 3 minutos para desconectar, liberar tensión y recuperar tu energía.
                 </p>
             </div>
 
-            <!-- Botón de Inicio estilizado y más arriba -->
-            <div class="w-full pt-2">
-                <button onclick="goToScreen('screen-intro')" class="w-full bg-tvn-teal hover:bg-tvn-teal/90 active:scale-[0.98] text-white font-poppins font-bold py-3 px-6 rounded-2xl shadow-lg transition-all flex justify-center items-center gap-3 group">
+            <!-- Bloque Inferior: Botón de Inicio con espacio seguro -->
+            <div class="w-full max-w-xs pt-4 pb-2">
+                <button onclick="goToScreen('screen-intro')" class="w-full bg-tvn-teal hover:bg-tvn-teal/90 active:scale-[0.96] text-white font-poppins font-bold py-3.5 px-6 rounded-2xl shadow-lg transition-all flex justify-center items-center gap-3 group">
                     Iniciar mi pausa 
                     <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
                 </button>
