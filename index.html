@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipo Pausa Activa Interactiva - TVN Media</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tvn: {
+                            blue: '#0c4cb4',
+                            blueDark: '#083680',
+                            teal: '#0fa1a1',
+                            coral: '#ff7a60',
+                            light: '#f8fafc',
+                            dark: '#0f172a',
+                            muted: '#475569'
+                        }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        lato: ['Lato', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos personalizados para animaciones y scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Animación del círculo de respiración */
+        @keyframes breathe {
+            0%, 100% { transform: scale(0.85); background-color: rgba(15, 161, 161, 0.2); }
+            50% { transform: scale(1.15); background-color: rgba(15, 161, 161, 0.4); }
+        }
+        .breathe-element {
+            animation: breathe 5s infinite ease-in-out;
+        }
+
+        /* Simulación de ondas en el fondo */
+        .bg-waves {
+            background-image: radial-gradient(circle at 100% 100%, rgba(15, 161, 161, 0.08) 0%, transparent 60%),
+                              radial-gradient(circle at 0% 0%, rgba(255, 122, 96, 0.05) 0%, transparent 40%);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white font-lato min-h-screen flex flex-col">
+
+    <!-- Header Principal -->
+    <header class="bg-slate-950 border-b border-slate-800 py-4 px-8 flex justify-between items-center z-10">
+        <div class="flex items-center gap-3">
+            <div class="bg-tvn-blue p-2 rounded-lg text-white font-poppins font-extrabold tracking-wider text-sm">
+                TVN MEDIA
+            </div>
+            <div>
+                <h1 class="font-poppins font-bold text-lg leading-none">Pausa Activa Interactiva</h1>
+                <p class="text-xs text-slate-400">Práctica Profesional - Campaña de Bienestar Laboral</p>
+            </div>
+        </div>
+        <div class="bg-tvn-teal/10 border border-tvn-teal/30 px-3 py-1 rounded-full text-tvn-teal text-xs font-semibold">
+            <i class="fa-solid fa-laptop-code mr-1"></i> Prototipo Interactivo v1.2
+        </div>
+    </header>
+
+    <!-- Contenedor de dos columnas principal -->
+    <main class="flex-grow grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+        
+        <!-- Columna Izquierda: Guía de Mapeo Genially -->
+        <section class="lg:col-span-7 bg-slate-950 p-6 lg:p-8 flex flex-col justify-between overflow-y-auto custom-scrollbar border-r border-slate-800">
+            <div class="space-y-6">
+                <div>
+                    <span class="text-xs font-poppins font-bold tracking-widest text-tvn-coral uppercase">Campaña: "Cuidarnos también es parte del trabajo"</span>
+                    <h2 class="text-3xl font-poppins font-extrabold mt-1 text-white">Guía de Adaptación: Quiz a Multicamino</h2>
+                    <p class="text-slate-400 mt-2 text-sm leading-relaxed">
+                        Las plantillas de quiz de Genially son perfectas visualmente. Para convertirlas en un camino de decisiones dinámico, sigue este mapa de conexiones lógicas. Es sumamente fácil de configurar en el editor.
+                    </p>
+                </div>
+
+                <!-- Pasos de configuración en Genially -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-poppins font-semibold text-tvn-teal border-b border-slate-800 pb-2">
+                        <i class="fa-solid fa-gears mr-2"></i>Pasos para configurar en Genially:
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Tarjeta Paso 1 -->
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="bg-tvn-blue text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
+                                <h4 class="font-poppins font-semibold text-sm">Reemplaza la Portada</h4>
+                            </div>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Toma la pantalla inicial del Quiz ("Imagen 1"). Reemplaza el título por <strong class="text-white">"Cuidarnos también es parte del trabajo"</strong> y añade la bajada de la pausa. Usa el fondo azul de tu afiche oficial.
+                            </p>
+                        </div>
+
+                        <!-- Tarjeta Paso 2 -->
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="bg-tvn-blue text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
+                                <h4 class="font-poppins font-semibold text-sm">Crea la Selección</h4>
+                            </div>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Usa la diapositiva de opciones múltiples. Duplica los botones para tener <strong class="text-white">3 opciones</strong> (Rutas). Vincula cada botón con la primera pantalla de su respectiva pausa.
+                            </p>
+                        </div>
+
+                        <!-- Tarjeta Paso 3 -->
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="bg-tvn-blue text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span>
+                                <h4 class="font-poppins font-semibold text-sm">Estructura las Rutas</h4>
+                            </div>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Crea 3 páginas para cada ruta (Paso 1, 2 y 3). Duplica la plantilla de introducción para mantener la coherencia. Configura el botón de abajo para avanzar secuencialmente.
+                            </p>
+                        </div>
+
+                        <!-- Tarjeta Paso 4 -->
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="bg-tvn-blue text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs">4</span>
+                                <h4 class="font-poppins font-semibold text-sm">Feedback de Cierre</h4>
+                            </div>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Reutiliza la pantalla final del Quiz para la pregunta: <strong class="text-white font-semibold">¿Cómo te sientes ahora?</strong>. Al presionar una opción, redirige al mensaje de agradecimiento oficial.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla de enlaces lógicos -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-poppins font-semibold text-tvn-coral border-b border-slate-800 pb-2">
+                        <i class="fa-solid fa-diagram-project mr-2"></i>Esquema de Enlaces Lógicos (Links)
+                    </h3>
+                    <div class="overflow-x-auto text-xs bg-slate-900 rounded-xl border border-slate-800">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-800 bg-slate-950/50">
+                                    <th class="p-3 text-slate-400 font-poppins font-semibold">Origen (Clic en...)</th>
+                                    <th class="p-3 text-slate-400 font-poppins font-semibold">Acción Genially</th>
+                                    <th class="p-3 text-slate-400 font-poppins font-semibold">Destino (Lleva a...)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-slate-850">
+                                    <td class="p-3 font-semibold text-white">Botón "Iniciar" de la Portada</td>
+                                    <td class="p-3 text-tvn-teal"><i class="fa-solid fa-arrow-right-long mr-1"></i> Ir a página</td>
+                                    <td class="p-3 text-slate-300">Pág. 2: Introducción</td>
+                                </tr>
+                                <tr class="border-b border-slate-850">
+                                    <td class="p-3 font-semibold text-white">Botón "Necesito liberar tensión"</td>
+                                    <td class="p-3 text-tvn-teal"><i class="fa-solid fa-arrow-right-long mr-1"></i> Ir a página</td>
+                                    <td class="p-3 text-slate-300">Ruta Tensión - Paso 1 (Hombros)</td>
+                                </tr>
+                                <tr class="border-b border-slate-850">
+                                    <td class="p-3 font-semibold text-white">Botón "Necesito despejar mi mente"</td>
+                                    <td class="p-3 text-tvn-teal"><i class="fa-solid fa-arrow-right-long mr-1"></i> Ir a página</td>
+                                    <td class="p-3 text-slate-300">Ruta Mente - Paso 1 (Respiración)</td>
+                                </tr>
+                                <tr class="border-b border-slate-850">
+                                    <td class="p-3 font-semibold text-white">Botón "Necesito recuperar energía"</td>
+                                    <td class="p-3 text-tvn-teal"><i class="fa-solid fa-arrow-right-long mr-1"></i> Ir a página</td>
+                                    <td class="p-3 text-slate-300">Ruta Energía - Paso 1 (Activación)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold text-white">Cualquier botón de "Paso 3"</td>
+                                    <td class="p-3 text-tvn-teal"><i class="fa-solid fa-arrow-right-long mr-1"></i> Ir a página</td>
+                                    <td class="p-3 text-slate-300">Pág. Evaluación ("¿Cómo te sientes?")</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel informativo de campaña preventiva -->
+            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-tvn-blue/20 rounded-full flex items-center justify-center text-tvn-blue">
+                        <i class="fa-solid fa-shield-halved text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-poppins font-bold text-white uppercase tracking-wider">Enfoque 100% Preventivo</h4>
+                        <p class="text-xs text-slate-400">Sin alarmismos, promoviendo el autocuidado saludable en TVN Media.</p>
+                    </div>
+                </div>
+                <div class="text-right text-[10px] text-slate-500">
+                    Propuesta de Campaña Interna 2026
+                </div>
+            </div>
+        </section>
+
+        <!-- Columna Derecha: Smartphone Emulator -->
+        <section class="lg:col-span-5 bg-slate-900 flex items-center justify-center p-6 bg-waves relative">
+            
+            <!-- Marca de agua decorativa -->
+            <div class="absolute top-4 left-6 text-xs font-poppins font-bold text-slate-600 tracking-wider">
+                <i class="fa-solid fa-mobile-screen-button mr-1"></i> VISTA PREVIA MÓVIL
+            </div>
+
+            <!-- Contenedor del Smartphone -->
+            <div class="relative w-[345px] h-[670px] bg-slate-950 rounded-[40px] p-[10px] shadow-[0_25px_60px_rgba(0,0,0,0.8)] border-[5px] border-slate-800 flex flex-col overflow-hidden">
+                
+                <!-- Celular: Notch superior -->
+                <div class="absolute top-2 left-1/2 -translate-x-1/2 w-32 h-5 bg-slate-950 rounded-b-xl z-50 flex justify-center items-center">
+                    <div class="w-12 h-1 bg-slate-800 rounded-full"></div>
+                </div>
+
+                <!-- Celular: Pantalla Interna -->
+                <div class="relative flex-grow bg-white rounded-[32px] overflow-hidden flex flex-col select-none text-tvn-dark">
+                    
+                    <!-- Barra de estado del celular mock -->
+                    <div class="h-8 bg-tvn-blue px-6 flex justify-between items-center text-[10px] text-white/80 z-40">
+                        <span class="font-semibold">1:43 PM</span>
+                        <div class="flex items-center gap-1">
+                            <i class="fa-solid fa-wifi"></i>
+                            <i class="fa-solid fa-signal"></i>
+                            <i class="fa-solid fa-battery-three-quarters text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- PANTALLA 1: PORTADA -->
+                    <div id="screen-portada" class="screen flex-grow flex flex-col justify-between p-6 pt-10 bg-tvn-blue text-white relative">
+                        <!-- Logo / Header -->
+                        <div class="text-center">
+                            <span class="text-[10px] font-poppins font-extrabold tracking-widest text-tvn-teal bg-white/10 px-3 py-1 rounded-full uppercase">
+                                Recursos Humanos | TVN Media
+                            </span>
+                        </div>
+
+                        <!-- Título y Subtítulo Centrales -->
+                        <div class="my-auto space-y-4">
+                            <h2 class="text-3xl font-poppins font-extrabold leading-tight tracking-tight text-white text-center">
+                                CUIDARNOS<br>TAMBIÉN<br>ES PARTE<br>DEL TRABAJO
+                            </h2>
+                            <div class="w-16 h-1 bg-tvn-coral mx-auto rounded"></div>
+                            <p class="text-sm text-center text-slate-100 font-lato leading-relaxed px-2">
+                                Una pausa interactiva de 3 minutos para desconectar, liberar tensión y recuperar tu energía.
+                            </p>
+                        </div>
+
+                        <!-- Ilustración decorativa integrada -->
+                        <div class="absolute bottom-28 right-0 left-0 flex justify-center opacity-10 pointer-events-none">
+                            <i class="fa-solid fa-spa text-[140px]"></i>
+                        </div>
+
+                        <!-- Botón de acción -->
+                        <div class="w-full pb-4">
+                            <button onclick="goToScreen('screen-intro')" class="w-full bg-tvn-teal hover:bg-tvn-teal/90 text-white font-poppins font-bold py-3.5 px-6 rounded-2xl shadow-lg transition-all flex justify-center items-center gap-2 group">
+                                Iniciar mi pausa 
+                                <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PANTALLA 2: INTRODUCCIÓN -->
+                    <div id="screen-intro" class="screen flex-grow hidden flex flex-col justify-between p-6 pt-10 bg-white text-tvn-dark">
+                        <!-- Botón para regresar -->
+                        <button onclick="goToScreen('screen-portada')" class="self-start text-xs font-semibold text-tvn-blue flex items-center gap-1 hover:underline">
+                            <i class="fa-solid fa-chevron-left"></i> Atrás
+                        </button>
+
+                        <div class="my-auto space-y-4">
+                            <div class="w-12 h-12 bg-tvn-blue/10 rounded-2xl flex items-center justify-center text-tvn-blue mx-auto mb-2">
+                                <i class="fa-solid fa-heart-pulse text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-poppins font-bold text-center text-tvn-blue">Tu momento de pausa</h3>
+                            <p class="text-xs text-tvn-muted text-center leading-relaxed px-1">
+                                El ritmo en el canal es dinámico, pero mantener la calidad de tu trabajo exige cuidar tu bienestar.
+                            </p>
+                            <p class="text-xs text-tvn-muted text-center leading-relaxed px-1 font-semibold text-tvn-teal">
+                                Esta es una herramienta interactiva diseñada para acompañarte en una pausa real de solo 3 minutos, adaptada a lo que necesitas justo ahora.
+                            </p>
+                            <p class="text-xs text-tvn-muted text-center leading-relaxed px-1">
+                                Es un espacio privado, libre de registros y pensado 100% para ti.
+                            </p>
+                        </div>
+
+                        <div class="w-full pb-4">
+                            <button onclick="goToScreen('screen-selection')" class="w-full bg-tvn-blue hover:bg-tvn-blueDark text-white font-poppins font-bold py-3.5 px-6 rounded-2xl shadow-md transition-all flex justify-center items-center gap-2">
+                                Continuar
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PANTALLA 3: SELECCIÓN -->
+                    <div id="screen-selection" class="screen flex-grow hidden flex flex-col justify-between p-6 pt-10 bg-tvn-blue text-white relative">
+                        <div>
+                            <span class="text-[9px] font-poppins font-extrabold tracking-widest text-tvn-teal uppercase bg-white/10 px-2 py-0.5 rounded">
+                                Bienestar
+                            </span>
+                            <h3 class="text-lg font-poppins font-bold mt-2 text-white">¿Cómo necesitas pausar hoy?</h3>
+                            <p class="text-[11px] text-slate-200 mt-1 leading-relaxed">
+                                Cada jornada es diferente. Escucha a tu cuerpo y elige la opción que mejor se adapte a lo que sientes para guiarte paso a paso:
+                            </p>
+                        </div>
+
+                        <!-- Opciones de decisión (Botones multicamino) -->
+                        <div class="space-y-3 my-auto">
+                            <!-- Ruta 1 -->
+                            <button onclick="startRoute('tension')" class="w-full bg-white text-tvn-blue hover:bg-slate-50 p-4 rounded-2xl text-left font-poppins font-bold text-xs shadow-md border border-slate-100 flex items-center justify-between group transition-all">
+                                <div class="flex items-center gap-3">
+                                    <span class="bg-tvn-blue/10 w-8 h-8 rounded-full flex items-center justify-center text-tvn-blue">
+                                        <i class="fa-solid fa-child-reaching"></i>
+                                    </span>
+                                    <span>Necesito liberar tensión</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-tvn-blue group-hover:translate-x-1 transition-all"></i>
+                            </button>
+
+                            <!-- Ruta 2 -->
+                            <button onclick="startRoute('mente')" class="w-full bg-white text-tvn-blue hover:bg-slate-50 p-4 rounded-2xl text-left font-poppins font-bold text-xs shadow-md border border-slate-100 flex items-center justify-between group transition-all">
+                                <div class="flex items-center gap-3">
+                                    <span class="bg-tvn-blue/10 w-8 h-8 rounded-full flex items-center justify-center text-tvn-blue">
+                                        <i class="fa-solid fa-brain"></i>
+                                    </span>
+                                    <span>Necesito despejar mi mente</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-tvn-blue group-hover:translate-x-1 transition-all"></i>
+                            </button>
+
+                            <!-- Ruta 3 -->
+                            <button onclick="startRoute('energia')" class="w-full bg-white text-tvn-blue hover:bg-slate-50 p-4 rounded-2xl text-left font-poppins font-bold text-xs shadow-md border border-slate-100 flex items-center justify-between group transition-all">
+                                <div class="flex items-center gap-3">
+                                    <span class="bg-tvn-blue/10 w-8 h-8 rounded-full flex items-center justify-center text-tvn-blue">
+                                        <i class="fa-solid fa-bolt"></i>
+                                    </span>
+                                    <span>Necesito recuperar energía</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-tvn-blue group-hover:translate-x-1 transition-all"></i>
+                            </button>
+                        </div>
+
+                        <div class="text-center text-[9px] text-slate-300 pb-2">
+                            Duración estimada: 3 minutos
+                        </div>
+                    </div>
+
+                    <!-- PANTALLAS DE PASOS DINÁMICOS -->
+                    <div id="screen-step" class="screen flex-grow hidden flex flex-col justify-between p-6 pt-10 bg-white text-tvn-dark">
+                        <!-- Cabecera del paso -->
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                            <span id="step-route-title" class="text-xs font-poppins font-extrabold text-tvn-teal uppercase tracking-wider">
+                                Liberar Tensión
+                            </span>
+                            <span id="step-number" class="text-xs font-semibold bg-tvn-blue/10 text-tvn-blue px-2.5 py-0.5 rounded-full">
+                                Paso 1 de 3
+                            </span>
+                        </div>
+
+                        <!-- Contenido Principal del Ejercicio -->
+                        <div class="my-auto text-center space-y-6">
+                            <!-- Visualización interactiva -->
+                            <div class="relative w-36 h-36 mx-auto flex items-center justify-center">
+                                <div id="breathe-circle" class="absolute inset-0 rounded-full bg-tvn-teal/20 breathe-element hidden"></div>
+                                <div class="absolute inset-0 rounded-full border-4 border-tvn-blue/10 flex items-center justify-center">
+                                    <!-- Temporizador visual circular -->
+                                    <svg class="w-full h-full transform -rotate-90">
+                                        <circle cx="72" cy="72" r="64" stroke="#e2e8f0" stroke-width="4" fill="transparent" />
+                                        <circle id="progress-bar" cx="72" cy="72" r="64" stroke="#0fa1a1" stroke-width="6" fill="transparent" 
+                                                stroke-dasharray="402" stroke-dashoffset="0" stroke-linecap="round" class="transition-all duration-1000" />
+                                    </svg>
+                                </div>
+                                <span id="timer-text" class="absolute font-poppins font-extrabold text-3xl text-tvn-blue">
+                                    30s
+                                </span>
+                            </div>
+
+                            <div class="space-y-2">
+                                <h4 id="step-instruction-title" class="font-poppins font-bold text-lg text-tvn-blue">
+                                    Baja los hombros
+                                </h4>
+                                <p id="step-instruction-desc" class="text-xs text-tvn-muted leading-relaxed px-2">
+                                    Baja suavemente los hombros. Gíralos lentamente hacia atrás mientras el círculo en pantalla completa una vuelta.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Botón de continuar -->
+                        <div class="w-full pb-4">
+                            <button id="btn-next-step" onclick="nextStep()" class="w-full bg-tvn-teal hover:bg-tvn-teal/95 text-white font-poppins font-bold py-3.5 px-6 rounded-2xl shadow-md transition-all flex justify-center items-center gap-2">
+                                Listo, continuar
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PANTALLA: EVALUACIÓN -->
+                    <div id="screen-eval" class="screen flex-grow hidden flex flex-col justify-between p-6 pt-10 bg-tvn-blue text-white">
+                        <div>
+                            <span class="text-[9px] font-poppins font-extrabold tracking-widest text-tvn-teal uppercase bg-white/10 px-2 py-0.5 rounded">
+                                Pausa Completada
+                            </span>
+                            <h3 class="text-xl font-poppins font-bold mt-2 text-white text-center">¡Buen trabajo!</h3>
+                            <div class="w-12 h-1 bg-tvn-coral mx-auto mt-2 rounded"></div>
+                        </div>
+
+                        <div class="my-auto space-y-4">
+                            <p class="text-xs text-center text-slate-100 leading-relaxed px-4">
+                                Tomar estos momentos protege tu salud y cuida tu energía. 
+                            </p>
+                            <h4 class="font-poppins font-bold text-sm text-center mt-4">¿Cómo te sientes ahora?</h4>
+                            
+                            <!-- Botones de Reacción interactiva -->
+                            <div class="space-y-2">
+                                <button onclick="goToScreen('screen-thanks')" class="w-full bg-white/10 hover:bg-white/20 p-3.5 rounded-xl text-left font-poppins font-semibold text-xs border border-white/10 flex items-center gap-3 transition-all">
+                                    <span class="text-xl">😌</span>
+                                    <span>Más relajado</span>
+                                </button>
+                                <button onclick="goToScreen('screen-thanks')" class="w-full bg-white/10 hover:bg-white/20 p-3.5 rounded-xl text-left font-poppins font-semibold text-xs border border-white/10 flex items-center gap-3 transition-all">
+                                    <span class="text-xl">🙂</span>
+                                    <span>Un poco mejor</span>
+                                </button>
+                                <button onclick="goToScreen('screen-thanks')" class="w-full bg-white/10 hover:bg-white/20 p-3.5 rounded-xl text-left font-poppins font-semibold text-xs border border-white/10 flex items-center gap-3 transition-all">
+                                    <span class="text-xl">😐</span>
+                                    <span>Igual</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="text-center text-[9px] text-slate-300 pb-2">
+                            Tus respuestas son 100% anónimas
+                        </div>
+                    </div>
+
+                    <!-- PANTALLA: AGRADECIMIENTO Y CIERRE -->
+                    <div id="screen-thanks" class="screen flex-grow hidden flex flex-col justify-between p-6 pt-10 bg-white text-tvn-dark">
+                        <!-- Decoración Superior -->
+                        <div class="text-center">
+                            <span class="text-[10px] font-poppins font-extrabold tracking-widest text-tvn-blue bg-tvn-blue/5 px-3 py-1 rounded-full uppercase">
+                                ¡Pausa Exitosa!
+                            </span>
+                        </div>
+
+                        <!-- Mensaje Central -->
+                        <div class="my-auto space-y-6 text-center">
+                            <div class="w-16 h-16 bg-tvn-teal/10 rounded-full flex items-center justify-center text-tvn-teal mx-auto mb-2">
+                                <i class="fa-solid fa-circle-check text-4xl"></i>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-poppins font-extrabold text-tvn-blue">¡Gracias!</h3>
+                                <p class="text-xs text-tvn-muted leading-relaxed px-2">
+                                    Gracias por tomarte este momento para ti.
+                                </p>
+                            </div>
+
+                            <div class="bg-tvn-blue/5 p-4 rounded-2xl border border-tvn-blue/10 space-y-1">
+                                <p class="text-xs text-tvn-muted">Recuerda siempre:</p>
+                                <h4 class="font-poppins font-bold text-xs text-tvn-blue leading-tight uppercase">
+                                    Cuidarnos también<br>es parte del trabajo
+                                </h4>
+                            </div>
+                        </div>
+
+                        <!-- Botón para cerrar / reiniciar -->
+                        <div class="w-full pb-4">
+                            <button onclick="goToScreen('screen-portada')" class="w-full bg-tvn-dark hover:bg-black text-white font-poppins font-bold py-3.5 px-6 rounded-2xl shadow-md transition-all">
+                                Volver al inicio
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Script de control interactivo para simular Genially -->
+    <script>
+        // Estructura de las rutas de la Pausa
+        const routesData = {
+            tension: {
+                title: "Liberar Tensión",
+                steps: [
+                    {
+                        title: "PASO 1: HOMBROS",
+                        desc: "Baja suavemente los hombros. Gíralos lentamente hacia atrás mientras el círculo en pantalla completa una vuelta.",
+                        time: 30
+                    },
+                    {
+                        title: "PASO 2: MANOS Y MUÑECAS",
+                        desc: "Abre y cierra las manos lentamente. Después mueve las muñecas en círculos pequeños para relajar las articulaciones de la digitación.",
+                        time: 40
+                    },
+                    {
+                        title: "PASO 3: RESPIRACIÓN RÍTMICA",
+                        desc: "Inhala profundamente mientras el círculo en pantalla aumenta de tamaño. Exhala despacio mientras vuelve a hacerse pequeño.",
+                        time: 50,
+                        breathe: true
+                    }
+                ]
+            },
+            mente: {
+                title: "Despejar mi Mente",
+                steps: [
+                    {
+                        title: "PASO 1: ENFOQUE INTERNO",
+                        desc: "Cierra los ojos o dirige la mirada al suelo. Inhala profundo por la nariz, retén el aire un momento y exhala lentamente por la boca.",
+                        time: 30,
+                        breathe: true
+                    },
+                    {
+                        title: "PASO 2: DISTANCIA VISUAL",
+                        desc: "Despega los ojos de la pantalla. Busca un punto lejano en el espacio (ventana o planta) y míralo fijamente parpadeando despacio.",
+                        time: 40
+                    },
+                    {
+                        title: "PASO 3: PRIORIZAR",
+                        desc: "De todas las tareas pendientes de hoy, elige una sola prioridad para retomar al volver. El resto puede esperar este minuto.",
+                        time: 50
+                    }
+                ]
+            },
+            energia: {
+                title: "Recuperar Energía",
+                steps: [
+                    {
+                        title: "PASO 1: ACTIVACIÓN FÍSICA",
+                        desc: "¡Ponte de pie! Estira los brazos hacia el techo con suavidad y mueve tu espalda de lado a lado para liberar la rigidez de la silla.",
+                        time: 30
+                    },
+                    {
+                        title: "PASO 2: MOVIMIENTO LIGERO",
+                        desc: "Da unos pasos cortos por tu área de trabajo. Sacude suavemente las piernas y los brazos para reactivar tu circulación sanguínea.",
+                        time: 40
+                    },
+                    {
+                        title: "PASO 3: HIDRATACIÓN",
+                        desc: "Ve por un vaso de agua fresca y toma un sorbo despacio. Siente cómo te hidrata y respira hondo antes de regresar a tu lugar.",
+                        time: 50
+                    }
+                ]
+            }
+        };
+
+        let activeRoute = null;
+        let currentStepIndex = 0;
+        let timerInterval = null;
+        let timeLeft = 0;
+        const dashArray = 402; // Longitud del círculo SVG (2 * PI * r) -> r=64
+
+        // Función para cambiar de pantalla
+        function goToScreen(screenId) {
+            // Detener temporizador si estaba corriendo
+            clearInterval(timerInterval);
+            
+            // Ocultar todas las pantallas del mockup
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(s => s.classList.add('hidden'));
+
+            // Mostrar la seleccionada
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        // Iniciar una Ruta de Pausa
+        function startRoute(routeName) {
+            activeRoute = routesData[routeName];
+            currentStepIndex = 0;
+            goToScreen('screen-step');
+            loadStep();
+        }
+
+        // Cargar datos del Paso actual de la Ruta
+        function loadStep() {
+            clearInterval(timerInterval);
+            
+            const stepData = activeRoute.steps[currentStepIndex];
+            
+            // Configurar textos
+            document.getElementById('step-route-title').innerText = activeRoute.title;
+            document.getElementById('step-number').innerText = `Paso ${currentStepIndex + 1} de 3`;
+            document.getElementById('step-instruction-title').innerText = stepData.title;
+            document.getElementById('step-instruction-desc').innerText = stepData.desc;
+            
+            // Mostrar o ocultar animación de respiración
+            const breatheCircle = document.getElementById('breathe-circle');
+            if(stepData.breathe) {
+                breatheCircle.classList.remove('hidden');
+            } else {
+                breatheCircle.classList.add('hidden');
+            }
+
+            // Cambiar etiqueta del botón en el paso final
+            const btnNext = document.getElementById('btn-next-step');
+            if (currentStepIndex === 2) {
+                btnNext.innerHTML = 'Finalizar pausa <i class="fa-solid fa-circle-check ml-1"></i>';
+            } else {
+                btnNext.innerHTML = 'Listo, continuar <i class="fa-solid fa-chevron-right ml-1"></i>';
+            }
+
+            // Inicializar Temporizador
+            timeLeft = stepData.time;
+            document.getElementById('timer-text').innerText = `${timeLeft}s`;
+            
+            // Resetear barra de progreso del SVG
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.strokeDashoffset = 0;
+
+            // Arrancar cuenta regresiva
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                if(timeLeft <= 0) {
+                    timeLeft = 0;
+                    clearInterval(timerInterval);
+                    // Efecto de parpadeo suave al finalizar el tiempo
+                    document.getElementById('timer-text').innerText = "Listo";
+                } else {
+                    document.getElementById('timer-text').innerText = `${timeLeft}s`;
+                }
+                
+                // Actualizar barra circular SVG
+                const progressPercentage = (stepData.time - timeLeft) / stepData.time;
+                const offset = dashArray * progressPercentage;
+                progressBar.style.strokeDashoffset = offset;
+            }, 1000);
+        }
+
+        // Avanzar en los pasos de la ruta
+        function nextStep() {
+            if (currentStepIndex < 2) {
+                currentStepIndex++;
+                loadStep();
+            } else {
+                // Ir a la pantalla de evaluación final
+                goToScreen('screen-eval');
+            }
+        }
+    </script>
+</body>
+</html>
