@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Pausa Activa Interactiva - TVN Media</title>
     
     <!-- Fuentes de Google de alta calidad -->
@@ -69,12 +69,24 @@
             background-image: radial-gradient(circle at 100% 100%, rgba(15, 161, 161, 0.15) 0%, transparent 60%),
                               radial-gradient(circle at 0% 0%, rgba(255, 122, 96, 0.1) 0%, transparent 45%);
         }
+
+        /* Solución de altura real de pantalla en móviles (Chrome, Safari, Samsung Internet, etc.) */
+        #app-main {
+            height: 100vh;              /* fallback para navegadores muy antiguos */
+            height: 100dvh;             /* navegadores modernos (Chrome 108+, Safari 15.4+) */
+            height: var(--app-height);  /* fallback garantizado calculado por JS abajo */
+        }
+        @media (min-width: 768px) {
+            #app-main {
+                height: 844px;
+            }
+        }
     </style>
 </head>
 <body class="font-lato min-h-screen text-tvn-dark flex flex-col items-center justify-center overflow-hidden bg-slate-900">
 
     <!-- Este contenedor asegura que en celulares la app use el 100% de la pantalla, sin bordes ni elementos externos -->
-    <main class="w-full max-w-md h-screen md:h-[844px] md:my-8 md:rounded-[40px] md:shadow-[0_24px_50px_rgba(0,0,0,0.5)] md:border-8 md:border-slate-800 bg-white flex flex-col justify-between overflow-hidden relative">
+    <main id="app-main" class="w-full max-w-md md:my-8 md:rounded-[40px] md:shadow-[0_24px_50px_rgba(0,0,0,0.5)] md:border-8 md:border-slate-800 bg-white flex flex-col justify-between overflow-hidden relative">
         
         <!-- PANTALLA 1: PORTADA OFICIAL (ESTILO AFICHE TVN) -->
         <section id="screen-portada" class="screen flex-grow flex flex-col justify-between p-6 pt-12 bg-tvn-blue text-white relative z-10">
@@ -363,6 +375,16 @@
     </main>
 
     <script>
+        // Solución de altura real de pantalla en móviles: calcula la altura visible
+        // real usando window.innerHeight, que se actualiza cuando la barra de
+        // direcciones del navegador (Chrome, Samsung Internet, etc.) aparece o desaparece.
+        function setAppHeight() {
+            document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+        }
+        window.addEventListener('resize', setAppHeight);
+        window.addEventListener('orientationchange', setAppHeight);
+        setAppHeight();
+
         // Declaración del árbol de decisiones e instrucciones estructuradas de cada pausa activa
         const routesData = {
             tension: {
