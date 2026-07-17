@@ -64,6 +64,71 @@
             animation: breathe 5s infinite ease-in-out;
         }
 
+        /* Pulso suave y constante para el aro del temporizador, presente en todos los pasos */
+        @keyframes pulseSoft {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.06);
+                opacity: 0.9;
+            }
+        }
+        .pulse-soft {
+            animation: pulseSoft 2.2s infinite ease-in-out;
+        }
+
+        /* Animaciones específicas que representan cada tipo de movimiento del ejercicio */
+        @keyframes rotateSlow {
+            0%, 100% { transform: rotate(-18deg); }
+            50% { transform: rotate(18deg); }
+        }
+        .anim-rotate-slow { animation: rotateSlow 2s ease-in-out infinite; }
+
+        @keyframes pulseScaleIcon {
+            0%, 100% { transform: scale(0.85); }
+            50% { transform: scale(1.15); }
+        }
+        .anim-pulse-scale { animation: pulseScaleIcon 1.2s ease-in-out infinite; }
+
+        @keyframes breatheIconAnim {
+            0%, 100% { transform: scale(0.9); opacity: 0.75; }
+            50% { transform: scale(1.25); opacity: 1; }
+        }
+        .anim-breathe-icon { animation: breatheIconAnim 5s ease-in-out infinite; }
+
+        @keyframes lookSide {
+            0%, 100% { transform: translateX(-14px); }
+            50% { transform: translateX(14px); }
+        }
+        .anim-look-side { animation: lookSide 2.4s ease-in-out infinite; }
+
+        @keyframes softBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(-4deg); }
+        }
+        .anim-soft-bounce { animation: softBounce 1.8s ease-in-out infinite; }
+
+        @keyframes stretchUp {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.08); }
+        }
+        .anim-stretch-up { animation: stretchUp 1.6s ease-in-out infinite; }
+
+        @keyframes walkSide {
+            0%, 100% { transform: translateX(-14px) rotate(-6deg); }
+            50% { transform: translateX(14px) rotate(6deg); }
+        }
+        .anim-walk-side { animation: walkSide 0.9s ease-in-out infinite; }
+
+        @keyframes tiltDrink {
+            0%, 100% { transform: rotate(0deg); }
+            30% { transform: rotate(-25deg); }
+            60% { transform: rotate(0deg); }
+        }
+        .anim-tilt-drink { animation: tiltDrink 2.4s ease-in-out infinite; }
+
         /* Degradados corporativos de fondo */
         .bg-waves {
             background-image: radial-gradient(circle at 100% 100%, rgba(15, 161, 161, 0.15) 0%, transparent 60%),
@@ -243,7 +308,16 @@
                 
                 <!-- Animación circular con temporizador SVG -->
                 <div class="relative w-44 h-44 mx-auto flex items-center justify-center">
-                    <!-- Elemento pulsante de respiración (Visible solo en pasos de respiración) -->
+                    <!-- Pastilla flotante con el tiempo restante -->
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-white border border-slate-200 shadow-md rounded-full px-4 py-1.5 flex items-center gap-1.5 z-10">
+                        <i class="fa-regular fa-clock text-tvn-teal text-sm"></i>
+                        <span id="timer-text" class="font-poppins font-extrabold text-sm text-tvn-blue">30s</span>
+                    </div>
+
+                    <!-- Aro pulsante suave y constante, presente en todos los pasos para dar sensación de movimiento mientras se lee -->
+                    <div class="absolute inset-0 rounded-full bg-tvn-teal/10 pulse-soft"></div>
+
+                    <!-- Elemento pulsante de respiración, más marcado (Visible solo en pasos de respiración) -->
                     <div id="breathe-circle" class="absolute inset-0 rounded-full bg-tvn-teal/20 breathe-element hidden"></div>
                     
                     <!-- Borde/Progreso circular -->
@@ -255,12 +329,9 @@
                         </svg>
                     </div>
                     
-                    <!-- Texto de cuenta atrás central -->
+                    <!-- Ícono animado que representa el movimiento del ejercicio actual -->
                     <div class="absolute flex flex-col items-center">
-                        <span id="timer-text" class="font-poppins font-extrabold text-4xl text-tvn-blue">
-                            30s
-                        </span>
-                        <span class="text-[12px] uppercase tracking-widest text-slate-400 font-bold mt-1">Tiempo</span>
+                        <i id="exercise-icon" class="fa-solid fa-child-reaching text-tvn-teal text-6xl"></i>
                     </div>
                 </div>
 
@@ -393,18 +464,24 @@
                     {
                         title: "PASO 1: HOMBROS",
                         desc: "Baja suavemente los hombros. Gíralos lentamente hacia atrás en círculos grandes mientras el contador completa el tiempo en pantalla.",
-                        time: 30
+                        time: 30,
+                        icon: "fa-solid fa-arrows-rotate",
+                        anim: "anim-rotate-slow"
                     },
                     {
                         title: "PASO 2: MANOS Y MUÑECAS",
                         desc: "Abre y cierra las manos lentamente estirando los dedos. Luego, haz círculos pequeños con las muñecas para relajar la articulación de la digitación.",
-                        time: 40
+                        time: 40,
+                        icon: "fa-solid fa-hand-back-fist",
+                        anim: "anim-pulse-scale"
                     },
                     {
                         title: "PASO 3: RESPIRACIÓN RÍTMICA",
                         desc: "Sigue la pulsación del círculo: inhala profundo mientras se expande el aro azul y exhala lentamente cuando se contraiga.",
                         time: 50,
-                        breathe: true
+                        breathe: true,
+                        icon: "fa-solid fa-lungs",
+                        anim: "anim-breathe-icon"
                     }
                 ]
             },
@@ -415,17 +492,23 @@
                         title: "PASO 1: ENFOQUE INTERNO",
                         desc: "Cierra los ojos o dirige la mirada fija al suelo. Inhala lento por la nariz, retén el aire por 3 segundos y exhala completamente por la boca.",
                         time: 30,
-                        breathe: true
+                        breathe: true,
+                        icon: "fa-solid fa-lungs",
+                        anim: "anim-breathe-icon"
                     },
                     {
                         title: "PASO 2: DISTANCIA VISUAL",
                         desc: "Despega tu mirada de cualquier monitor o celular. Busca un objeto lejano en tu entorno (una ventana, planta o cuadro) y míralo parpadeando despacio.",
-                        time: 40
+                        time: 40,
+                        icon: "fa-solid fa-eye",
+                        anim: "anim-look-side"
                     },
                     {
                         title: "PASO 3: PRIORIZACIÓN",
                         desc: "Visualiza todas tus tareas pendientes de hoy. Elige solo una prioridad clave para retomar al terminar. El resto de pendientes puede esperar un momento.",
-                        time: 50
+                        time: 50,
+                        icon: "fa-solid fa-list-check",
+                        anim: "anim-soft-bounce"
                     }
                 ]
             },
@@ -435,17 +518,23 @@
                     {
                         title: "PASO 1: ACTIVACIÓN FÍSICA",
                         desc: "¡Ponte de pie! Estira suavemente ambos brazos hacia el techo lo más alto que puedas, luego mueve tu torso de lado a lado liberando rigidez muscular.",
-                        time: 30
+                        time: 30,
+                        icon: "fa-solid fa-child-reaching",
+                        anim: "anim-stretch-up"
                     },
                     {
                         title: "PASO 2: MOVIMIENTO LIGERO",
                         desc: "Camina unos pocos pasos alrededor de tu módulo de trabajo. Sacude levemente las manos y piernas para liberar tensión y reactivar la circulación.",
-                        time: 40
+                        time: 40,
+                        icon: "fa-solid fa-person-walking",
+                        anim: "anim-walk-side"
                     },
                     {
                         title: "PASO 3: HIDRATACIÓN",
                         desc: "Acércate por un vaso de agua fresca. Toma un sorbo despacio y consciente, sintiendo cómo te refresca antes de regresar a sentarte.",
-                        time: 50
+                        time: 50,
+                        icon: "fa-solid fa-glass-water",
+                        anim: "anim-tilt-drink"
                     }
                 ]
             }
@@ -498,6 +587,10 @@
             } else {
                 breatheCircle.classList.add('hidden');
             }
+
+            // Actualizar el ícono animado que representa el movimiento del paso actual
+            const exerciseIcon = document.getElementById('exercise-icon');
+            exerciseIcon.className = `${stepData.icon} text-tvn-teal text-6xl ${stepData.anim}`;
 
             // Cambiar la etiqueta del botón finalizador
             const btnNext = document.getElementById('btn-next-step');
