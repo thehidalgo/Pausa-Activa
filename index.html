@@ -79,30 +79,82 @@
             animation: pulseSoft 2.2s infinite ease-in-out;
         }
 
-        /* Animaciones específicas que representan cada tipo de movimiento del ejercicio */
-        @keyframes rotateSlow {
-            0%, 100% { transform: rotate(-18deg); }
-            50% { transform: rotate(18deg); }
+        /* Animaciones para las figuras de palitos (movimientos de cuerpo completo) */
+        @keyframes shoulderRollL {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            50% { transform: rotate(-22deg) translateY(-5px); }
         }
-        .anim-rotate-slow { animation: rotateSlow 2s ease-in-out infinite; }
-
-        @keyframes pulseScaleIcon {
-            0%, 100% { transform: scale(0.85); }
-            50% { transform: scale(1.15); }
+        @keyframes shoulderRollR {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            50% { transform: rotate(22deg) translateY(-5px); }
         }
-        .anim-pulse-scale { animation: pulseScaleIcon 1.2s ease-in-out infinite; }
+        .shoulder-l { animation: shoulderRollL 1.8s ease-in-out infinite; }
+        .shoulder-r { animation: shoulderRollR 1.8s ease-in-out infinite; }
 
+        @keyframes armUpL {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-115deg); }
+        }
+        @keyframes armUpR {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(115deg); }
+        }
+        .arm-up-l { animation: armUpL 1.6s ease-in-out infinite; }
+        .arm-up-r { animation: armUpR 1.6s ease-in-out infinite; }
+
+        @keyframes walkLegL {
+            0%, 100% { transform: rotate(-20deg); }
+            50% { transform: rotate(20deg); }
+        }
+        @keyframes walkLegR {
+            0%, 100% { transform: rotate(20deg); }
+            50% { transform: rotate(-20deg); }
+        }
+        .walk-leg-l { animation: walkLegL 0.7s ease-in-out infinite; }
+        .walk-leg-r { animation: walkLegR 0.7s ease-in-out infinite; }
+        .walk-arm-l { animation: walkLegR 0.7s ease-in-out infinite; }
+        .walk-arm-r { animation: walkLegL 0.7s ease-in-out infinite; }
+
+        /* Mano abriéndose y cerrándose de verdad (cross-fade entre dos posturas) */
+        @keyframes handOpenFade {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0; transform: scale(0.9); }
+        }
+        @keyframes handClosedFade {
+            0%, 100% { opacity: 0; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        .hand-open { animation: handOpenFade 1.3s ease-in-out infinite; }
+        .hand-closed { animation: handClosedFade 1.3s ease-in-out infinite; position: absolute; inset: 0; }
+
+        /* Respiración: ícono + ondas concéntricas que se expanden como un eco */
         @keyframes breatheIconAnim {
-            0%, 100% { transform: scale(0.9); opacity: 0.75; }
-            50% { transform: scale(1.25); opacity: 1; }
+            0%, 100% { transform: scale(0.9); opacity: 0.8; }
+            50% { transform: scale(1.3); opacity: 1; }
         }
         .anim-breathe-icon { animation: breatheIconAnim 5s ease-in-out infinite; }
+        @keyframes ringPulse {
+            0% { transform: scale(0.7); opacity: 0.6; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        .ring-pulse { animation: ringPulse 2.5s ease-out infinite; }
 
+        /* Ojo mirando de lado a lado, con flechas que refuerzan la dirección */
         @keyframes lookSide {
             0%, 100% { transform: translateX(-14px); }
             50% { transform: translateX(14px); }
         }
         .anim-look-side { animation: lookSide 2.4s ease-in-out infinite; }
+        @keyframes arrowBounceL {
+            0%, 100% { transform: translateX(0); opacity: 0.4; }
+            50% { transform: translateX(-6px); opacity: 1; }
+        }
+        @keyframes arrowBounceR {
+            0%, 100% { transform: translateX(0); opacity: 0.4; }
+            50% { transform: translateX(6px); opacity: 1; }
+        }
+        .arrow-bounce-l { animation: arrowBounceL 2.4s ease-in-out infinite; }
+        .arrow-bounce-r { animation: arrowBounceR 2.4s ease-in-out infinite; }
 
         @keyframes softBounce {
             0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -110,24 +162,18 @@
         }
         .anim-soft-bounce { animation: softBounce 1.8s ease-in-out infinite; }
 
-        @keyframes stretchUp {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-10px) scale(1.08); }
-        }
-        .anim-stretch-up { animation: stretchUp 1.6s ease-in-out infinite; }
-
-        @keyframes walkSide {
-            0%, 100% { transform: translateX(-14px) rotate(-6deg); }
-            50% { transform: translateX(14px) rotate(6deg); }
-        }
-        .anim-walk-side { animation: walkSide 0.9s ease-in-out infinite; }
-
         @keyframes tiltDrink {
             0%, 100% { transform: rotate(0deg); }
             30% { transform: rotate(-25deg); }
             60% { transform: rotate(0deg); }
         }
         .anim-tilt-drink { animation: tiltDrink 2.4s ease-in-out infinite; }
+        @keyframes dropFall {
+            0% { transform: translateY(-4px); opacity: 0; }
+            40% { opacity: 1; }
+            100% { transform: translateY(10px); opacity: 0; }
+        }
+        .drop-fall { animation: dropFall 2.4s ease-in infinite; }
 
         /* Degradados corporativos de fondo */
         .bg-waves {
@@ -329,10 +375,8 @@
                         </svg>
                     </div>
                     
-                    <!-- Ícono animado que representa el movimiento del ejercicio actual -->
-                    <div class="absolute flex flex-col items-center">
-                        <i id="exercise-icon" class="fa-solid fa-child-reaching text-tvn-teal text-6xl"></i>
-                    </div>
+                    <!-- Visual animado que representa el movimiento del ejercicio actual -->
+                    <div id="exercise-visual" class="absolute flex items-center justify-center w-24 h-24"></div>
                 </div>
 
                 <!-- Textos guía del ejercicio en ejecución -->
@@ -465,23 +509,20 @@
                         title: "PASO 1: HOMBROS",
                         desc: "Baja suavemente los hombros. Gíralos lentamente hacia atrás en círculos grandes mientras el contador completa el tiempo en pantalla.",
                         time: 30,
-                        icon: "fa-solid fa-arrows-rotate",
-                        anim: "anim-rotate-slow"
+                        visual: "hombros"
                     },
                     {
                         title: "PASO 2: MANOS Y MUÑECAS",
                         desc: "Abre y cierra las manos lentamente estirando los dedos. Luego, haz círculos pequeños con las muñecas para relajar la articulación de la digitación.",
                         time: 40,
-                        icon: "fa-solid fa-hand-back-fist",
-                        anim: "anim-pulse-scale"
+                        visual: "manos"
                     },
                     {
                         title: "PASO 3: RESPIRACIÓN RÍTMICA",
                         desc: "Sigue la pulsación del círculo: inhala profundo mientras se expande el aro azul y exhala lentamente cuando se contraiga.",
                         time: 50,
                         breathe: true,
-                        icon: "fa-solid fa-lungs",
-                        anim: "anim-breathe-icon"
+                        visual: "respiracion"
                     }
                 ]
             },
@@ -493,22 +534,19 @@
                         desc: "Cierra los ojos o dirige la mirada fija al suelo. Inhala lento por la nariz, retén el aire por 3 segundos y exhala completamente por la boca.",
                         time: 30,
                         breathe: true,
-                        icon: "fa-solid fa-lungs",
-                        anim: "anim-breathe-icon"
+                        visual: "respiracion"
                     },
                     {
                         title: "PASO 2: DISTANCIA VISUAL",
                         desc: "Despega tu mirada de cualquier monitor o celular. Busca un objeto lejano en tu entorno (una ventana, planta o cuadro) y míralo parpadeando despacio.",
                         time: 40,
-                        icon: "fa-solid fa-eye",
-                        anim: "anim-look-side"
+                        visual: "ojos"
                     },
                     {
                         title: "PASO 3: PRIORIZACIÓN",
                         desc: "Visualiza todas tus tareas pendientes de hoy. Elige solo una prioridad clave para retomar al terminar. El resto de pendientes puede esperar un momento.",
                         time: 50,
-                        icon: "fa-solid fa-list-check",
-                        anim: "anim-soft-bounce"
+                        visual: "priorizacion"
                     }
                 ]
             },
@@ -519,22 +557,19 @@
                         title: "PASO 1: ACTIVACIÓN FÍSICA",
                         desc: "¡Ponte de pie! Estira suavemente ambos brazos hacia el techo lo más alto que puedas, luego mueve tu torso de lado a lado liberando rigidez muscular.",
                         time: 30,
-                        icon: "fa-solid fa-child-reaching",
-                        anim: "anim-stretch-up"
+                        visual: "brazos"
                     },
                     {
                         title: "PASO 2: MOVIMIENTO LIGERO",
                         desc: "Camina unos pocos pasos alrededor de tu módulo de trabajo. Sacude levemente las manos y piernas para liberar tensión y reactivar la circulación.",
                         time: 40,
-                        icon: "fa-solid fa-person-walking",
-                        anim: "anim-walk-side"
+                        visual: "caminar"
                     },
                     {
                         title: "PASO 3: HIDRATACIÓN",
                         desc: "Acércate por un vaso de agua fresca. Toma un sorbo despacio y consciente, sintiendo cómo te refresca antes de regresar a sentarte.",
                         time: 50,
-                        icon: "fa-solid fa-glass-water",
-                        anim: "anim-tilt-drink"
+                        visual: "hidratacion"
                     }
                 ]
             }
@@ -569,6 +604,101 @@
         }
 
         // Cargar los datos informativos del paso activo
+        // Genera el visual animado correspondiente a cada tipo de ejercicio.
+        // Los movimientos de cuerpo completo usan una figura de palitos con las
+        // extremidades animadas; los gestos puntuales usan íconos con señales
+        // de dirección claras (flechas, cross-fade entre dos posturas, etc.)
+        function getExerciseVisualHTML(visual) {
+            const T = '#0fa1a1'; // color teal de trazo para las figuras SVG
+
+            switch (visual) {
+                case 'hombros':
+                    return `
+                        <svg viewBox="0 0 100 120" class="w-24 h-28">
+                            <circle cx="50" cy="18" r="11" fill="${T}"/>
+                            <line x1="50" y1="29" x2="50" y2="75" stroke="${T}" stroke-width="7" stroke-linecap="round"/>
+                            <g class="shoulder-l" style="transform-origin:50px 35px;">
+                                <line x1="50" y1="35" x2="25" y2="30" stroke="${T}" stroke-width="6" stroke-linecap="round"/>
+                            </g>
+                            <g class="shoulder-r" style="transform-origin:50px 35px;">
+                                <line x1="50" y1="35" x2="75" y2="30" stroke="${T}" stroke-width="6" stroke-linecap="round"/>
+                            </g>
+                            <line x1="50" y1="75" x2="35" y2="112" stroke="${T}" stroke-width="7" stroke-linecap="round"/>
+                            <line x1="50" y1="75" x2="65" y2="112" stroke="${T}" stroke-width="7" stroke-linecap="round"/>
+                        </svg>`;
+
+                case 'brazos':
+                    return `
+                        <svg viewBox="0 0 100 120" class="w-24 h-28">
+                            <circle cx="50" cy="18" r="11" fill="${T}"/>
+                            <line x1="50" y1="29" x2="50" y2="75" stroke="${T}" stroke-width="7" stroke-linecap="round"/>
+                            <g class="arm-up-l" style="transform-origin:50px 33px;">
+                                <line x1="50" y1="33" x2="25" y2="55" stroke="${T}" stroke-width="6" stroke-linecap="round"/>
+                            </g>
+                            <g class="arm-up-r" style="transform-origin:50px 33px;">
+                                <line x1="50" y1="33" x2="75" y2="55" stroke="${T}" stroke-width="6" stroke-linecap="round"/>
+                            </g>
+                            <line x1="50" y1="75" x2="35" y2="112" stroke="${T}" stroke-width="7" stroke-linecap="round"/>
+                            <line x1="50" y1="75" x2="65" y2="112" stroke="${T}" stroke-width="7" stroke-linecap="round"/>
+                        </svg>`;
+
+                case 'caminar':
+                    return `
+                        <svg viewBox="0 0 100 120" class="w-24 h-28">
+                            <circle cx="50" cy="18" r="11" fill="${T}"/>
+                            <line x1="50" y1="29" x2="50" y2="72" stroke="${T}" stroke-width="7" stroke-linecap="round"/>
+                            <g class="walk-arm-l" style="transform-origin:50px 34px;">
+                                <line x1="50" y1="34" x2="32" y2="55" stroke="${T}" stroke-width="6" stroke-linecap="round"/>
+                            </g>
+                            <g class="walk-arm-r" style="transform-origin:50px 34px;">
+                                <line x1="50" y1="34" x2="68" y2="55" stroke="${T}" stroke-width="6" stroke-linecap="round"/>
+                            </g>
+                            <g class="walk-leg-l" style="transform-origin:50px 72px;">
+                                <line x1="50" y1="72" x2="35" y2="110" stroke="${T}" stroke-width="7" stroke-linecap="round"/>
+                            </g>
+                            <g class="walk-leg-r" style="transform-origin:50px 72px;">
+                                <line x1="50" y1="72" x2="65" y2="110" stroke="${T}" stroke-width="7" stroke-linecap="round"/>
+                            </g>
+                        </svg>`;
+
+                case 'manos':
+                    return `
+                        <div class="relative w-16 h-16 flex items-center justify-center">
+                            <i class="fa-solid fa-hand text-tvn-teal text-6xl hand-open"></i>
+                            <i class="fa-solid fa-hand-back-fist text-tvn-teal text-6xl hand-closed"></i>
+                        </div>`;
+
+                case 'respiracion':
+                    return `
+                        <div class="relative w-20 h-20 flex items-center justify-center">
+                            <div class="absolute inset-0 rounded-full border-2 border-tvn-teal ring-pulse"></div>
+                            <div class="absolute inset-0 rounded-full border-2 border-tvn-teal ring-pulse" style="animation-delay:1.25s;"></div>
+                            <i class="fa-solid fa-lungs text-tvn-teal text-6xl anim-breathe-icon"></i>
+                        </div>`;
+
+                case 'ojos':
+                    return `
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-chevron-left text-tvn-teal/60 text-xl arrow-bounce-l"></i>
+                            <i class="fa-solid fa-eye text-tvn-teal text-5xl anim-look-side"></i>
+                            <i class="fa-solid fa-chevron-right text-tvn-teal/60 text-xl arrow-bounce-r"></i>
+                        </div>`;
+
+                case 'priorizacion':
+                    return `<i class="fa-solid fa-list-check text-tvn-teal text-6xl anim-soft-bounce"></i>`;
+
+                case 'hidratacion':
+                    return `
+                        <div class="relative w-16 h-20 flex items-center justify-center">
+                            <i class="fa-solid fa-tint text-tvn-teal/70 text-lg drop-fall absolute top-1"></i>
+                            <i class="fa-solid fa-glass-water text-tvn-teal text-6xl anim-tilt-drink"></i>
+                        </div>`;
+
+                default:
+                    return `<i class="fa-solid fa-child-reaching text-tvn-teal text-6xl"></i>`;
+            }
+        }
+
         function loadStep() {
             clearInterval(timerInterval);
             
@@ -588,9 +718,8 @@
                 breatheCircle.classList.add('hidden');
             }
 
-            // Actualizar el ícono animado que representa el movimiento del paso actual
-            const exerciseIcon = document.getElementById('exercise-icon');
-            exerciseIcon.className = `${stepData.icon} text-tvn-teal text-6xl ${stepData.anim}`;
+            // Actualizar el visual animado que representa el movimiento del paso actual
+            document.getElementById('exercise-visual').innerHTML = getExerciseVisualHTML(stepData.visual);
 
             // Cambiar la etiqueta del botón finalizador
             const btnNext = document.getElementById('btn-next-step');
